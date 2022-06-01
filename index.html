@@ -35,7 +35,7 @@ var unityInstance = UnityLoader.instantiate("unityContainer", "Build/islvk.json"
 
       function showRewardedAd(){
         vkBridge.send('VKWebAppShowNativeAds',{ad_format:"reward"}).then(data => {
-          console.log(data); unityI.SendMessage('Ads2', 'reward'); }).catch(error => {console.log(error); unityI.SendMessage('Ads2', 'rclose');});
+          console.log(data); unityI.SendMessage('Ads2', 'reward'); unityI.SendMessage('Ads2', 'rclose');}).catch(error => {console.log(error); unityI.SendMessage('Ads2', 'rclose');});
         
       }
  
