@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>%UNITY_WEB_NAME%</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+	
+	
+	 <script src="https://yandex.ru/games/sdk/v2"></script>
+    <script>
+      var sdk;
+      var unityI = null;
+	 var ylang="en";
+      YaGames.init({
+        adv:{
+          onAdvClose: wasShown =>{console.info('adv closed!');
+        }
+      }
+      })
+        .then(ysdk => {
+            sdk = ysdk;
+			ylang=sdk.environment.i18n.lang;
+			console.info('ylang:'+ylang);
+            showFullscreenAd2();
+      });
+	  
+	  function ldu(){
+if (unityI==null){
+var unityInstance = UnityLoader.instantiate("unityContainer", "%UNITY_WEBGL_BUILD_URL%", {onProgress: UnityProgress});
+		  unityI = unityInstance;
+}}
+
+		function showFullscreenAd2(){
+        sdk.adv.showFullscreenAdv({
+		 callbacks: {
+		  onError: () => {},
+		  onClose: () => {}
+		 }});
+      }
+
+
+      function showFullscreenAd(){
+        sdk.adv.showFullscreenAdv({
+          callbacks: {
+          onOpen: () => {
+		   unityI.SendMessage('Ads2', 'iopen');
+            console.log('I ad open.');
+        },
+          onClose: () => {
+		    unityI.SendMessage('Ads2', 'iclose');
+            console.log('I ad closed.');
+        },
+            onError: (e) => {
+             unityI.SendMessage('Ads2', 'ifail');
+                console.log('Error while open video ad:', e);
+            }
+		
+		} 
+       });
+      }
+
+     function showRewardedAd(){
+        sdk.adv.showRewardedVideo({
+        callbacks: {
+            onOpen: () => { unityI.SendMessage('Ads2', 'ropen');
+			console.log('R ad open.');
+			},
+            onRewarded: () => {
+                unityI.SendMessage('Ads2', 'reward');
+          },  
+            onClose: () => {unityI.SendMessage('Ads2', 'rclose');
+			  console.log('I ad closed.');
+			},
+            onError: (e) => {
+             unityI.SendMessage('Ads2', 'rfail');
+                console.log('Error while open video ad:', e);
+            }
+          }
+        });
+      }
+    </script>
+	
+    <script src="TemplateData/UnityProgress.js"></script>  
+    <script src="%UNITY_WEBGL_LOADER_URL%"></script>
+    <script>
+	ldu();
+    	function startup() {
+		window.onresize = function() {
+			resizeGame();
+		};
+		resizeGame();
+	}
+	function resizeGame() {
+	
+		//	Ensure that the game fits within the width of its containing
+		//	div, and is shallower than the height of the containing window.
+	
+	//	var containerDiv = document.getElementById('containerDiv');
+	//	var element = document.getElementById('unityContainer');      // the element
+		
+	//	var widthLimitedScale = Math.floor( containerDiv.offsetWidth ) /  %UNITY_WIDTH%;
+	//	var heightLimitedScale = (Math.floor( window.innerHeight )-50 ) / %UNITY_HEIGHT%;
+		
+	//	var scale = widthLimitedScale;
+	//	if (heightLimitedScale < scale) scale = heightLimitedScale;
+		
+	//	element.style.width = Math.floor( %UNITY_WIDTH% * scale) + 'px';
+	//	element.style.height = Math.floor(%UNITY_HEIGHT% * scale) + 'px';
+	//	element.style.margin = "auto";
+		//
+		element.style.width = Math.floor( window.innerWidth ) + 'px';
+		element.style.height = Math.floor( window.innerHeight ) + 'px';
+	}
+    </script>
+    <style>
+    		html {
+    			background-color: #000;
+    			color: #ccc;
+    			margin: 0;
+    			padding: 0;
+    		}
+    		body {
+    			margin: auto;
+    			padding-top: 1em;
+				overflow: hidden;
+			padding-bottom:0em;
+    			padding: 2em;
+    			padding-top: 0em;
+    			text-align: center;
+    		}
+ 
+		canvas {  
+		 width: 100%;  
+		 height: 100%;  
+		}
+		#unityContainer { margin: auto; }
+		#containerDiv {
+			object-fit: contain;
+			max-width: 100%;
+			max-height: 100%;
+			width: auto;
+			height: auto;
+			margin: 4em;
+			margin-top: 0em;
+			margin-bottom:.9em;
+   		}
+ 	</style>
+  </head>
+  <body onload="startup();">
+  	<div id="containerDiv">
+		<div class="webgl-content">
+			<div id="unityContainer"></div>
+		
+		</div>
+	</div>
+	</body>
+</html>
+
