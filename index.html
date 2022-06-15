@@ -67,22 +67,24 @@ vkBridge.send("VKWebAppShowInviteBox", {})
 		//	Ensure that the game fits within the width of its containing
 		//	div, and is shallower than the height of the containing window.
 	
-	//	var containerDiv = document.getElementById('containerDiv');
+		var containerDiv = document.getElementById('containerDiv');
 		var element = document.getElementById('unityContainer');      // the element
 		
-	//	var widthLimitedScale = Math.floor( containerDiv.offsetWidth ) /  1280;
-	//	var heightLimitedScale = (Math.floor( window.innerHeight )-50 ) / 720;
+		var widthLimitedScale = Math.floor( containerDiv.offsetWidth ) /  1280;
+		var heightLimitedScale = (Math.floor( window.innerHeight )-50 ) / 720;
 		
-	//	var scale = widthLimitedScale;
-	//	if (heightLimitedScale < scale) scale = heightLimitedScale;
+		var scale = widthLimitedScale;
+		if (heightLimitedScale < scale) scale = heightLimitedScale;
 		
-	//	element.style.width = Math.floor( 1280 * scale) + 'px';
-	//	element.style.height = Math.floor(720 * scale) + 'px';
-	//	element.style.margin = "auto";
+		element.style.width = Math.floor( 1280 * scale) + 'px';
+		element.style.height = Math.floor(720 * scale) + 'px';
+		element.style.margin = "auto";
 		//
+		
+		if (window.innerWidth>window.innerHeight) {
 		element.style.width = Math.floor( window.innerWidth ) + 'px';
 		element.style.height = Math.floor( window.innerHeight ) + 'px';
-	}
+	}}
     </script>
     <style>
     		html {
